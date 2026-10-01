@@ -61,7 +61,7 @@ def auth_callback(username: str, password: str):
         os.getenv("CHAINLIT_PASSWORD"),
     ):
         return cl.User(
-            identifier="Student",
+            identifier="achu",
             metadata={"role": "student", "provider": "credentials"},
         )
     else:

@@ -5,6 +5,9 @@ export const WORKFLOW_ID =
 
 export const CREATE_SESSION_ENDPOINT = "/api/create-session";
 
+export const ASSISTANT_LOGO_URL =
+  "https://static.thenounproject.com/png/3468363-512.png";
+
 export const STARTER_PROMPTS: StartScreenPrompt[] = [
   {
     label: "What can you do?",
