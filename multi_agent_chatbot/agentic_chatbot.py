@@ -1,4 +1,5 @@
 import os
+from pathlib import Path
 
 import chainlit as cl
 import dotenv
@@ -6,7 +7,8 @@ from agents import InputGuardrailTripwireTriggered, Runner, SQLiteSession
 from nutrition_agent import exa_search_mcp, nutrition_agent
 from openai.types.responses import ResponseTextDeltaEvent
 
-dotenv.load_dotenv()
+ROOT_DIR = Path(__file__).resolve().parents[1]
+dotenv.load_dotenv(ROOT_DIR / ".env")
 
 
 @cl.on_chat_start
@@ -28,28 +30,13 @@ async def on_message(message: cl.Message):
     )
 
     msg = cl.Message(content="")
-    async for event in result.stream_events():
-        # Stream final message text to screen
-        if event.type == "raw_response_event" and isinstance(
-            event.data, ResponseTextDeltaEvent
-        ):
-            await msg.stream_token(token=event.data.delta)
-            print(event.data.delta, end="", flush=True)
-
-        elif (
-            event.type == "raw_response_event"
-            and hasattr(event.data, "item")
-            and hasattr(event.data.item, "type")
-            and event.data.item.type == "function_call"
-            and len(event.data.item.arguments) > 0
-        ):
-            with cl.Step(name=f"{event.data.item.name}", type="tool") as step:
-                step.input = event.data.item.arguments
-                print(
-                    f"\nTool call: {
-                        event.data.item.name} with args: {
-                        event.data.item.arguments}"
-                )
+    async with cl.Step(name="Thinking", type="run"):
+        async for event in result.stream_events():
+            if event.type == "raw_response_event" and isinstance(
+                event.data, ResponseTextDeltaEvent
+            ):
+                await msg.stream_token(token=event.data.delta)
+                print(event.data.delta, end="", flush=True)
 
     await msg.update()
 

@@ -23,22 +23,12 @@ async def on_message(message: cl.Message):
     result = Runner.run_streamed(nutrition_agent, message.content, session=session)
 
     msg = cl.Message(content="")
-    async for event in result.stream_events():
-        # Stream final message text to screen
-        if event.type == "raw_response_event" and isinstance(
-            event.data, ResponseTextDeltaEvent
-        ):
-            await msg.stream_token(token=event.data.delta)
-
-        elif (
-            event.type == "raw_response_event"
-            and hasattr(event.data, "item")
-            and hasattr(event.data.item, "type")
-            and event.data.item.type == "function_call"
-            and len(event.data.item.arguments) > 0
-        ):
-            with cl.Step(name=f"{event.data.item.name}", type="tool") as step:
-                step.input = event.data.item.arguments
+    async with cl.Step(name="Thinking", type="run"):
+        async for event in result.stream_events():
+            if event.type == "raw_response_event" and isinstance(
+                event.data, ResponseTextDeltaEvent
+            ):
+                await msg.stream_token(token=event.data.delta)
 
     await msg.update()
 

@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="240" height="72" viewBox="0 0 240 72" role="img" aria-labelledby="title">
+  <title id="title">Nutrition Assistant</title>
+  <circle cx="36" cy="36" r="30" fill="#d8efad"/>
+  <path d="M19 39h34l-4 13H23z" fill="#245a45"/>
+  <path d="M21 38c4 5 26 5 30 0" fill="none" stroke="#245a45" stroke-linecap="round" stroke-width="3"/>
+  <path d="M36 34c-1-10 5-16 14-18-1 9-5 15-14 18Z" fill="#e6815d"/>
+  <path d="M36 35c0-7-4-12-11-14 0 7 3 12 11 14Z" fill="#68a96e"/>
+  <path d="M36 36V24" fill="none" stroke="#245a45" stroke-linecap="round" stroke-width="2"/>
+  <text x="78" y="34" fill="#f5f5ef" font-family="Georgia, serif" font-size="25">Nutrition</text>
+  <text x="80" y="52" fill="#d8efad" font-family="sans-serif" font-size="10" letter-spacing="2">ASSISTANT</text>
+</svg>
