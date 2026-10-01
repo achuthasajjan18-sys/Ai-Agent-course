@@ -30,7 +30,7 @@ async def on_message(message: cl.Message):
     )
 
     msg = cl.Message(content="")
-    async with cl.Step(name="Thinking", type="run"):
+    async with cl.Step(name="Thinking"):
         async for event in result.stream_events():
             if event.type == "raw_response_event" and isinstance(
                 event.data, ResponseTextDeltaEvent
