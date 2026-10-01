@@ -38,6 +38,16 @@ async def on_message(message: cl.Message):
                 await msg.stream_token(token=event.data.delta)
                 print(event.data.delta, end="", flush=True)
 
+            elif (
+                event.type == "raw_response_event"
+                and hasattr(event.data, "item")
+                and hasattr(event.data.item, "type")
+                and event.data.item.type == "function_call"
+                and hasattr(event.data.item, "name")
+                and str(event.data.item.name).lower() == "thinking"
+            ):
+                continue
+
     await msg.update()
 
 
